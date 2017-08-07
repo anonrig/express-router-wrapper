@@ -1,0 +1,12 @@
+{
+  "name": "express-router-wrapper",
+  "version": "1.0.0",
+  "description": "Express Router with Sync, Promise and Async-Await Support",
+  "main": "index.js",
+  "repository": "https://github.com/anonrig/express-router-wrapper",
+  "author": "Yagiz Nizipli",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
+}
