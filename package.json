@@ -4,7 +4,11 @@
   "description": "Express Router with Sync, Promise and Async-Await Support",
   "main": "index.js",
   "repository": "https://github.com/anonrig/express-router-wrapper",
-  "author": "Yagiz Nizipli",
+  "author": [
+    "Yagiz Nizipli",
+    "Mert Dogar",
+    "Deniz Gurkaynak"
+  ],
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.4"
