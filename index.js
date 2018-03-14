@@ -75,7 +75,7 @@ class PromiseRouter {
           const rv = handler(req, res, next);
 
           // Check if promise, if yes, execute then.
-          if (isPromise(rv))
+          if (isPromise(rv)) {
             rv
               .then(data => {
                 if (opt_isLast && data)
@@ -84,6 +84,9 @@ class PromiseRouter {
                   next();
               })
               .catch(next);
+          } else {
+            next();
+          }
         } catch (err) {
           next(err);
         }
