@@ -1,6 +1,6 @@
 {
   "name": "express-router-wrapper",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Express Router with Sync, Promise and Async-Await Support",
   "main": "index.js",
   "repository": "https://github.com/anonrig/express-router-wrapper",
