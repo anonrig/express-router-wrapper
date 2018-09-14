@@ -78,7 +78,7 @@ class PromiseRouter {
           if (isPromise(rv)) {
             rv
               .then(data => {
-                if (opt_isLast && data)
+                if (opt_isLast && data && !res.headersSent)
                   res.json(data);
                 else if (!opt_isLast)
                   next();
