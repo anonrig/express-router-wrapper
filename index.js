@@ -24,7 +24,8 @@ class PromiseRouter {
    * Wraps param() method.
    */
   param() {
-    return this.router_.param.apply(this.router_, arguments);
+    const args = this.handleArguments_.apply(this, arguments);
+    return this.router_.param.apply(this.router_, args);
   }
 
 
@@ -47,7 +48,7 @@ class PromiseRouter {
       if (i == 0)
         return arg;
 
-      return this.wrapHandler_(arg, i == args.length - 1);
+      return this.wrapHandler_(arg, i == args.length - 1, i);
     });
   }
 
@@ -67,27 +68,49 @@ class PromiseRouter {
    * @param {boolean=} opt_isLast
    * @return {Function}
    */
-  wrapHandler_(handler, opt_isLast) {
+  wrapHandler_(handler, opt_isLast, index) {
+    console.log('handler', handler)
     if (isAsync(handler) || isPromise(handler) || _.isFunction(handler))
-      return function(req, res, next) {
+      return function(req, res, next, param) {
+        console.log('index', index, opt_isLast)
+        console.log('handler', handler)
         try {
           // If not promise, this function will execute automatically.
-          const rv = handler(req, res, next);
-
+          const rv = handler(req, res, next, param);
+          console.log('param', param);
           // Check if promise, if yes, execute then.
           if (isPromise(rv)) {
             rv
               .then(data => {
+                // if (param) {
+                //   console.log('param exists calling next', next)
+                //   return next()
+                // }
+                // if (param) {
+                //   console.log('this is param')
+                //   return;
+                // }
+
+                if (param) {
+                  return next();
+                }
+
+                console.log('noldu')
                 if (opt_isLast && data)
                   res.json(data);
                 else if (!opt_isLast)
                   next();
               })
-              .catch(next);
+              .catch((error) => {
+                console.log('catche girdi', error)
+                next(error)
+              });
           } else {
+            console.log('else')
             next();
           }
         } catch (err) {
+          console.error('error', error)
           next(err);
         }
       }
